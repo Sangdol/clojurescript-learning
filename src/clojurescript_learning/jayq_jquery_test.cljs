@@ -4,7 +4,7 @@
 (ns clojurescript-learning.jayq-jquery-test
   (:require [jayq.core :as j]))
 
-(println "Hello Jayq!")
+;(println "Hello Jayq!")
 
 #_("
   1. Bind a click event to an anchor tag.

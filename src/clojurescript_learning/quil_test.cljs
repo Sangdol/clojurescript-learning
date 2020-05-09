@@ -1,7 +1,7 @@
 (ns clojurescript-learning.quil-test
   (:require [quil.core :as q :include-macros true]))
 
-(println "Hello Quil!")
+;(println "Hello Quil!")
 
 (defn draw []
   (q/background 240)
