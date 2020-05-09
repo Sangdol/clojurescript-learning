@@ -7,7 +7,6 @@
             [quil.middleware :as m]))
 
 (defn setup []
-  (println (/ (q/width) 2) (/ (q/height) 2))
   (q/background 240)
   (q/frame-rate 5)
   {:x (/ (q/width) 2) :y (/ (q/height) 2)})
@@ -25,7 +24,7 @@
 
 
 (q/defsketch random-walks
-             :size [200 200]
+             :size [100 100]
              :setup setup
              :draw draw
              :update update
