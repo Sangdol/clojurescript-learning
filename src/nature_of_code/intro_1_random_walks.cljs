@@ -18,6 +18,13 @@
     (- (rand-int 200) 100)
     (basic-walks)))
 
+(defn montecarlo-walks []
+  (loop [a (rand) b (rand)]
+    (if (> a b)
+      (recur (rand) (rand))
+      (* b (basic-walks)))))
+
+
 (defn setup []
   (q/background 240)
   (q/frame-rate 5)
@@ -46,4 +53,11 @@
              :setup setup
              :draw draw
              :update (update levy-flight-walks)
+             :middleware [m/fun-mode])
+
+(q/defsketch montecarlo-container
+             :size [100 100]
+             :setup setup
+             :draw draw
+             :update (update montecarlo-walks)
              :middleware [m/fun-mode])
