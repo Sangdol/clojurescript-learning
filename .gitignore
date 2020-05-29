@@ -11,3 +11,4 @@ pom.xml
 .repl*
 .idea
 *.iml
+.cljs_node_repl
