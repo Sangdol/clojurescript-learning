@@ -6,9 +6,9 @@
   (:require [quil.core :as q :include-macros true]
             [quil.middleware :as m]))
 
-(defn rand-update [rand-func]
+(defn rand-update [rand-func seed]
   (fn [n]
-    (+ n (rand-func))))
+    (+ n (rand-func seed))))
 
 (defn basic-walks []
   (- (rand-int 3) 1))
@@ -24,17 +24,22 @@
       (recur (rand) (rand))
       (* b (basic-walks)))))
 
+(defn pelin-noise-walks [seed]
+  (- (* (q/noise seed) 4) 2))
+
 
 (defn setup []
   (q/background 240)
   (q/frame-rate 5)
-  {:x (/ (q/width) 2) :y (/ (q/height) 2)})
+  {:x (/ (q/width) 2) :y (/ (q/height) 2) :xt 0 :yt 10000})
 
 (defn update [rand-func]
   (fn [state]
     (-> state
-        (update-in [:x] (rand-update rand-func))
-        (update-in [:y] (rand-update rand-func)))))
+        (update-in [:x] (rand-update rand-func (:xt state)))
+        (update-in [:y] (rand-update rand-func (:yt state)))
+        (update-in [:xt] (fn [] (+ (:xt state) 0.1)))
+        (update-in [:yt] (fn [] (+ (:yt state) 0.1))))))
 
 (defn draw [state]
   (q/stroke 0)
@@ -60,4 +65,11 @@
              :setup setup
              :draw draw
              :update (update montecarlo-walks)
+             :middleware [m/fun-mode])
+
+(q/defsketch pelin-noise-container
+             :size [100 100]
+             :setup setup
+             :draw draw
+             :update (update pelin-noise-walks)
              :middleware [m/fun-mode])
